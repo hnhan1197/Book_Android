@@ -1,13 +1,9 @@
-package com.example.book_android;
+package com.example.book_android.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
-
-    @SerializedName("_id")
-    @Expose
-    private String id;
+public class UserRegister {
     @SerializedName("username")
     @Expose
     private String username;
@@ -17,28 +13,12 @@ public class User {
     @SerializedName("password")
     @Expose
     private String password;
-    @SerializedName("createdAt")
-    @Expose
-    private String createdAt;
-    @SerializedName("updatedAt")
-    @Expose
-    private String updatedAt;
 
-
-
-    public User(String email, String password) {
+    public UserRegister(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -63,19 +43,4 @@ public class User {
         this.password = password;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }
