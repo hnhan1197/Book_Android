@@ -13,20 +13,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface APIService {
-    APIService apiService = (APIService) new Retrofit.Builder()
-            .baseUrl("http://192.168.1.10:5000/")
-            .client(new OkHttpClient.Builder().build())
-            .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
+    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    APIService apiService = new Retrofit.Builder()
+            .baseUrl("http://192.168.1.131:5000/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
+
     @GET("api/user")
     Call<List<User>> getAllUsers();
 
+
     @POST("api/auth/register")
-    Call<UserRegister> register(@Field("username") String username,
-                                @Field("email") String email,
-                                @Field("password") String password);
+    @Headers("Content-Type: application/json")
+    Call<UserRegister> register(@Body UserRegister user);
 }

@@ -23,13 +23,9 @@ public class User {
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-
-
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
+    @SerializedName("__v")
+    @Expose
+    private Integer v;
 
     public String getId() {
         return id;
@@ -78,4 +74,13 @@ public class User {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public Integer getV() {
+        return v;
+    }
+
+    public void setV(Integer v) {
+        this.v = v;
+    }
+
 }
