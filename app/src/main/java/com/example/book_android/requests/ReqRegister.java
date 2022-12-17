@@ -1,9 +1,9 @@
-package com.example.book_android.models;
+package com.example.book_android.requests;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserRegister {
+public class ReqRegister {
     @SerializedName("username")
     @Expose
     private String username;
@@ -14,7 +14,7 @@ public class UserRegister {
     @Expose
     private String password;
 
-    public UserRegister(String username, String email, String password) {
+    public ReqRegister(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
