@@ -54,7 +54,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="148dp"
         android:text="ĐĂNG NHẬP"
         android:textColor="@color/primary"
         android:textSize="24sp"

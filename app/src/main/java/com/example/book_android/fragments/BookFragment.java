@@ -2,13 +2,31 @@ package com.example.book_android.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.book_android.APIService;
 import com.example.book_android.R;
+import com.example.book_android.adapters.BookAdapter;
+import com.example.book_android.adapters.HomeAdapter;
+import com.example.book_android.models.Book;
+import com.example.book_android.models.Token;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +43,8 @@ public class BookFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private RecyclerView rcvBook;
+    private List<Book> bookList;
     public BookFragment() {
         // Required empty public constructor
     }
@@ -56,11 +75,38 @@ public class BookFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rcvBook = (RecyclerView) getView().findViewById(R.id.rcvBook);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        rcvBook.setLayoutManager(linearLayoutManager);
 
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL);
+        rcvBook.addItemDecoration(itemDecoration);
+
+        bookList = new ArrayList<>();
+        getAllBookByUser();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_book, container, false);
+    }
+    private void getAllBookByUser() {
+        APIService.apiService.getAllBookByUser(Token.accessToken).enqueue(new Callback<List<Book>>() {
+            @Override
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
+                bookList = response.body();
+                BookAdapter bookAdapter = new BookAdapter(bookList);
+                rcvBook.setAdapter(bookAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Book>> call, Throwable t) {
+                Toast.makeText(BookFragment.this.getContext(), "Có lỗi nhá", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

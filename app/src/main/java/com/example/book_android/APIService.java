@@ -1,5 +1,6 @@
 package com.example.book_android;
 
+import com.example.book_android.models.Book;
 import com.example.book_android.models.Token;
 import com.example.book_android.requests.ReqLogin;
 import com.example.book_android.requests.ReqRegister;
@@ -12,9 +13,8 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -37,4 +37,12 @@ public interface APIService {
     @POST("api/auth/login")
     @Headers("Content-Type: application/json")
     Call<ReqLogin> login(@Body ReqLogin reqLogin);
+
+    @GET("api/book")
+    @Headers("Content-Type: application/json")
+    Call<List<Book>> getAllBook(@Header("token") String token);
+
+    @GET("api/book/getByUser")
+    @Headers("Content-Type: application/json")
+    Call<List<Book>> getAllBookByUser(@Header("token") String token);
 }
