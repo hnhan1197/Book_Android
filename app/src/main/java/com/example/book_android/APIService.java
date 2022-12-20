@@ -29,7 +29,6 @@ public interface APIService {
     @GET("api/user")
     Call<List<ReqRegister>> getAllUsers();
 
-
     @POST("api/auth/register")
     @Headers("Content-Type: application/json")
     Call<ReqRegister> register(@Body ReqRegister reqRegister);
