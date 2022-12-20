@@ -12,6 +12,18 @@
         android:textStyle="bold"
         android:textSize="28sp" />
     <EditText
+        android:id="@+id/dialogInputBookID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Mã sách"
+        android:background="@drawable/custom_input"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:layout_margin="8dp"
+        android:inputType="text"
+        android:minHeight="48dp" />
+    <EditText
         android:id="@+id/dialogInputBookName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,10 +81,10 @@
         android:minHeight="48dp" />
 
     <Button
-        android:id="@+id/dialogSaveBook"
+        android:id="@+id/dialogEditBook"
         android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primary"
-        android:text="Lưu"/>
+        android:text="Sửa"/>
 </LinearLayout>

@@ -33,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btnAddBook"
             android:layout_width="54dp"
             android:layout_height="62dp"
             android:layout_marginBottom="32dp"

@@ -94,4 +94,10 @@ public class Book {
         this.user = user;
     }
 
+    public Book(String bookName, String bookImg, String bookDesc, Integer price) {
+        this.bookName = bookName;
+        this.bookImg = bookImg;
+        this.bookDesc = bookDesc;
+        this.price = price;
+    }
 }

@@ -13,10 +13,13 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface APIService {
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
@@ -44,4 +47,16 @@ public interface APIService {
     @GET("api/book/getByUser")
     @Headers("Content-Type: application/json")
     Call<List<Book>> getAllBookByUser(@Header("token") String token);
+
+    @POST("api/book/")
+    @Headers("Content-Type: application/json")
+    Call<Book> addNewBook(@Header("token") String token, @Body Book book);
+
+    @PUT("api/book/{BookId}")
+    @Headers("Content-Type: application/json")
+    Call<Book> editABook(@Header("token") String token, @Path("BookId") String BookId, @Body Book book);
+
+    @DELETE("api/book/{BookId}")
+    @Headers("Content-Type: application/json")
+    Call<Book> deleteABook(@Header("token") String token, @Path("BookId") String BookId);
 }
