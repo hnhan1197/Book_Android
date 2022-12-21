@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,7 +97,7 @@ public class BookFragment extends Fragment {
 
         bookList = new ArrayList<>();
         getAllBookByUser();
-
+        new ItemTouchHelper(itemSimpleCallback).attachToRecyclerView(rcvBook);
         view.findViewById(R.id.btnAddBook).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,6 +131,21 @@ public class BookFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_book, container, false);
     }
+
+    ItemTouchHelper.SimpleCallback itemSimpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            String bookID = bookList.get(viewHolder.getAdapterPosition()).getId();
+            deleteBook(bookID);
+            bookList.remove(viewHolder.getAdapterPosition());
+            bookAdapter.notifyDataSetChanged();
+        }
+    };
     private void addNewBook(String bookName, String bookImg, String bookDesc, int bookPrice) {
         Book book = new Book(bookName, bookImg, bookDesc, bookPrice);
         APIService.apiService.addNewBook(Token.accessToken, book).enqueue(new Callback<Book>() {
@@ -137,7 +153,8 @@ public class BookFragment extends Fragment {
             public void onResponse(Call<Book> call, Response<Book> response) {
                 try {
                     if (response.isSuccessful()) {
-                        bookList.add(book);
+                        Book newBook = response.body();
+                        bookList.add(newBook);
                         bookAdapter.notifyItemInserted(bookList.size() - 1);
                         Toast.makeText(BookFragment.this.getContext(), "Đăng bán sách thành công", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();
@@ -153,6 +170,28 @@ public class BookFragment extends Fragment {
             @Override
             public void onFailure(Call<Book> call, Throwable t) {
                 Toast.makeText(BookFragment.this.getContext(), "Đăng bán sách thất bại", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void deleteBook(String bookID) {
+        APIService.apiService.deleteABook(Token.accessToken, bookID).enqueue(new Callback<Book>() {
+            @Override
+            public void onResponse(Call<Book> call, Response<Book> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(BookFragment.this.getContext(), "Xóa sách thành công", Toast.LENGTH_LONG).show();
+                    } else {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(BookFragment.this.getContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(BookFragment.this.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Book> call, Throwable t) {
+
             }
         });
     }

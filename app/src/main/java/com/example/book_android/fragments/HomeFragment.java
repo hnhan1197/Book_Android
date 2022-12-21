@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,7 @@ import retrofit2.Response;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment  implements SwipeRefreshLayout.OnRefreshListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,6 +46,8 @@ public class HomeFragment extends Fragment {
     private String mParam2;
     private RecyclerView rcvBookHome;
     private List<Book> bookList;
+    HomeAdapter homeAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -81,15 +85,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        rcvBookHome = (RecyclerView) getView().findViewById(R.id.rcvHome);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
-//        rcvBookHome.setLayoutManager(linearLayoutManager);
-//
-//        DividerItemDecoration itemDecoration = new DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL);
-//        rcvBookHome.addItemDecoration(itemDecoration);
-//
-//        bookList = new ArrayList<>();
-//        getAllBook();
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
     @Override
@@ -104,13 +100,16 @@ public class HomeFragment extends Fragment {
 
         bookList = new ArrayList<>();
         getAllBook();
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshHome);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
+
     private void getAllBook() {
         APIService.apiService.getAllBook(Token.accessToken).enqueue(new Callback<List<Book>>() {
             @Override
             public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
                 bookList = response.body();
-                HomeAdapter homeAdapter = new HomeAdapter(bookList);
+                homeAdapter = new HomeAdapter(HomeFragment.this.getContext(), bookList);
                 rcvBookHome.setAdapter(homeAdapter);
             }
 
@@ -119,5 +118,17 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(HomeFragment.this.getContext(), "Có lỗi nhá", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        getAllBook();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 1000);
     }
 }

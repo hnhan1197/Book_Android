@@ -19,6 +19,6 @@ public class SwipeItemBook extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int pos = viewHolder.getAdapterPosition();
-        this.adapter.deleteItemAtPos(pos);
+//        this.adapter.deleteItemAtPos(pos);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.book_android;
 
 import com.example.book_android.models.Book;
+import com.example.book_android.models.Receipt;
 import com.example.book_android.models.Token;
 import com.example.book_android.requests.ReqLogin;
 import com.example.book_android.requests.ReqRegister;
@@ -59,4 +60,12 @@ public interface APIService {
     @DELETE("api/book/{BookId}")
     @Headers("Content-Type: application/json")
     Call<Book> deleteABook(@Header("token") String token, @Path("BookId") String BookId);
+
+    @GET("api/book/{BookId}")
+    @Headers("Content-Type: application/json")
+    Call<Book> getABook(@Header("token") String token, @Path("BookId") String BookId);
+
+    @POST("api/receipt")
+    @Headers("Content-Type: application/json")
+    Call<Receipt> createReceipt(@Header("token") String token, @Body Receipt receipt);
 }

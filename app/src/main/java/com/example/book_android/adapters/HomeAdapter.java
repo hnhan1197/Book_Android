@@ -1,16 +1,21 @@
 package com.example.book_android.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.book_android.BookDetailActivity;
 import com.example.book_android.R;
 import com.example.book_android.models.Book;
 import com.example.book_android.models.User;
@@ -22,8 +27,10 @@ import java.util.Locale;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder>{
     private final List<Book> bookList;
+    private Context mContext;
 
-    public HomeAdapter(List<Book> bookList) {
+    public HomeAdapter(Context mContext, List<Book> bookList) {
+        this.mContext = mContext;
         this.bookList = bookList;
     }
 
@@ -44,8 +51,21 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         holder.tvBookName.setText(book.getBookName());
         holder.tvPrice.setText("Giá: " + formatter.format(book.getPrice()) + " VND");
         holder.tvUser.setText("Người đăng bán: " + book.getUser().getUsername());
-    }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickGoToDetail(book.getId());
+            }
+        });
+    }
+    private void onClickGoToDetail(String bookId) {
+        Intent intent = new Intent(mContext, BookDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("BookID", bookId);
+        intent.putExtras(bundle);
+        mContext.startActivity(intent);
+    }
     @Override
     public int getItemCount() {
         if (bookList != null) return bookList.size();
@@ -53,7 +73,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     }
 
     public static class HomeViewHolder extends RecyclerView.ViewHolder{
-
         private final TextView tvBookName, tvPrice, tvUser;
         private final ImageView imgBook;
 
