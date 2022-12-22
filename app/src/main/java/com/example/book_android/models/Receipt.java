@@ -16,11 +16,13 @@ public class Receipt {
     @SerializedName("book")
     @Expose
     private Book book;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
 
-    public Receipt(Integer price, String bookID) {
-        this.price = price;
-        this.book.setId(bookID);
-    }
+    @SerializedName("updatedAt")
+    @Expose
+    private String updatedAt;
 
     public String getId() {
         return id;
@@ -52,5 +54,21 @@ public class Receipt {
 
     public void setBook(Book book) {
         this.book = book;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

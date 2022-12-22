@@ -18,6 +18,7 @@ import com.example.book_android.fragments.HomeFragment;
 import com.example.book_android.models.Book;
 import com.example.book_android.models.Receipt;
 import com.example.book_android.models.Token;
+import com.example.book_android.requests.ReqReceipt;
 
 import org.json.JSONObject;
 
@@ -51,6 +52,7 @@ public class BookDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showConfirmBuyBook(price, bookID);
+//                createReceipt(29000, bookID);
             }
         });
         getBookDetail(bookID);
@@ -81,10 +83,10 @@ public class BookDetailActivity extends AppCompatActivity {
         dialog.show();
     }
     private void createReceipt(int price, String bookID) {
-        Receipt receipt = new Receipt(price, bookID);
-        APIService.apiService.createReceipt(Token.accessToken, receipt).enqueue(new Callback<Receipt>() {
+        ReqReceipt receipt = new ReqReceipt(price, bookID);
+        APIService.apiService.createReceipt(Token.accessToken, receipt).enqueue(new Callback<ReqReceipt>() {
             @Override
-            public void onResponse(Call<Receipt> call, Response<Receipt> response) {
+            public void onResponse(Call<ReqReceipt> call, Response<ReqReceipt> response) {
                 try {
                     if (response.isSuccessful()) {
                         Toast.makeText(BookDetailActivity.this, "Mua sách thành công", Toast.LENGTH_SHORT).show();
@@ -99,7 +101,7 @@ public class BookDetailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Receipt> call, Throwable t) {
+            public void onFailure(Call<ReqReceipt> call, Throwable t) {
                 Toast.makeText(BookDetailActivity.this, "Mua sách thất bại", Toast.LENGTH_SHORT).show();
             }
         });

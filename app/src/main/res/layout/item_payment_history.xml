@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_item_book"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/back"
+    android:orientation="vertical"
+    android:textAlignment="viewEnd"
+    android:weightSum="4">
+
+    <TextView
+        android:id="@+id/txtReceiptID"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="4dp"
+        android:text="Mai cả lớp nghỉ"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtReceiptBookName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="4dp"
+        android:text="Mai cả lớp nghỉ"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtReceiptDate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="4dp"
+        android:text="Mai cả lớp nghỉ"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtTotalPayment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="Mai cả lớp nghỉ"
+        android:textSize="16sp" />
+
+</LinearLayout>

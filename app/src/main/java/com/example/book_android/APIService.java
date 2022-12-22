@@ -4,6 +4,7 @@ import com.example.book_android.models.Book;
 import com.example.book_android.models.Receipt;
 import com.example.book_android.models.Token;
 import com.example.book_android.requests.ReqLogin;
+import com.example.book_android.requests.ReqReceipt;
 import com.example.book_android.requests.ReqRegister;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,7 +26,7 @@ import retrofit2.http.Path;
 public interface APIService {
     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     APIService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.10:5000/")
+            .baseUrl("http://192.168.1.126:5000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
@@ -67,5 +68,10 @@ public interface APIService {
 
     @POST("api/receipt")
     @Headers("Content-Type: application/json")
-    Call<Receipt> createReceipt(@Header("token") String token, @Body Receipt receipt);
+    Call<ReqReceipt> createReceipt(@Header("token") String token, @Body ReqReceipt receipt);
+
+    @GET("api/receipt")
+    @Headers("Content-Type: application/json")
+    Call<List<Receipt>> getAllReceipt(@Header("token") String token);
+
 }

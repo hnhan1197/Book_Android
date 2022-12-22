@@ -118,9 +118,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         return 0;
     }
 
-//    public void deleteItemAtPos(int pos) {
-//
-//    }
     private void deleteBook(String bookID) {
         APIService.apiService.deleteABook(Token.accessToken, bookID).enqueue(new Callback<Book>() {
             @Override
