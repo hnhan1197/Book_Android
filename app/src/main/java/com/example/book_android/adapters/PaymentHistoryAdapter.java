@@ -1,11 +1,13 @@
 package com.example.book_android.adapters;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.book_android.R;
@@ -15,6 +17,8 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -31,10 +35,12 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
         return new PaymentHistoryAdapter.HistoryHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull PaymentHistoryAdapter.HistoryHolder holder, int position) {
         Receipt receipt = receipts.get(position);
         DecimalFormat formatter = new DecimalFormat("###,###,###.##");
+//        String date = String.valueOf(Instant.parse(receipt.getCreatedAt()));
         holder.txtReceiptID.setText("Mã hóa đơn: " + receipt.getId());
         holder.txtBookName.setText("Sách: " + receipt.getBook().getBookName());
         holder.txtDateBuy.setText("Ngày mua: " + convertDate(receipt.getCreatedAt()));
@@ -46,17 +52,11 @@ public class PaymentHistoryAdapter extends RecyclerView.Adapter<PaymentHistoryAd
         return receipts.size();
     }
 
-    private String convertDate (String value) {
-        String dtStart = value;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        try {
-            Date date = format.parse(dtStart);
-            String dateTime = format.format(date);
-            return dateTime;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return "";
+    private String convertDate (Date date){
+        date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String strDate = dateFormat.format(date);
+        return strDate;
     }
 
     public static class HistoryHolder extends RecyclerView.ViewHolder{

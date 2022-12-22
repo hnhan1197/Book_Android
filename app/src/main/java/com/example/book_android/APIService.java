@@ -3,6 +3,7 @@ package com.example.book_android;
 import com.example.book_android.models.Book;
 import com.example.book_android.models.Receipt;
 import com.example.book_android.models.Token;
+import com.example.book_android.models.User;
 import com.example.book_android.requests.ReqLogin;
 import com.example.book_android.requests.ReqReceipt;
 import com.example.book_android.requests.ReqRegister;
@@ -24,15 +25,16 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface APIService {
-    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+    Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").create();
     APIService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.126:5000/")
+            .baseUrl("http://192.168.1.10:5000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(APIService.class);
 
     @GET("api/user")
-    Call<List<ReqRegister>> getAllUsers();
+    @Headers("Content-Type: application/json")
+    Call<User> getUserInfo(@Header("token") String token);
 
     @POST("api/auth/register")
     @Headers("Content-Type: application/json")

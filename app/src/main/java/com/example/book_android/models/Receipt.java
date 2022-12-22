@@ -3,6 +3,8 @@ package com.example.book_android.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 public class Receipt {
     @SerializedName("_id")
     @Expose
@@ -18,7 +20,7 @@ public class Receipt {
     private Book book;
     @SerializedName("createdAt")
     @Expose
-    private String createdAt;
+    private Date createdAt;
 
     @SerializedName("updatedAt")
     @Expose
@@ -56,11 +58,11 @@ public class Receipt {
         this.book = book;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
